@@ -11,7 +11,7 @@ const Navbar = () => {
       .then(() => {
         alert("Logout Successfully");
       })
-      .catch((error) => console.log(error));
+      .catch((error) => alert(error));
   };
 
   return (
@@ -22,8 +22,13 @@ const Navbar = () => {
         <NavLink to="/about">About</NavLink>
         <NavLink to="/career">Career</NavLink>
       </div>
-      <div className="login-btn flex gap-5">
-        <img src={userIcon} alt="" />
+      <div className="login-btn flex gap-3">
+        <img
+          className="w-10 rounded-full "
+          src={`${currentUser ? currentUser.photoURL : userIcon}`}
+          alt=""
+          title={currentUser ? currentUser.displayName : "Guest User"}
+        />
 
         {currentUser ? (
           <Link onClick={handleLogOut} className="btn btn-primary px-10">

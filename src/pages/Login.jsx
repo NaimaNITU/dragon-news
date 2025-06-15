@@ -1,8 +1,9 @@
-import React, { use } from "react";
+import React, { use, useState } from "react";
 import { Navigate, NavLink, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../provider/AuthProvider";
 
 const Login = () => {
+  const [error, setError] = useState("");
   const { userLogin } = use(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
@@ -11,7 +12,9 @@ const Login = () => {
     event.preventDefault();
     const form = event.target;
     const email = form.email.value;
+
     const password = form.password.value;
+
     console.log(email, password);
 
     userLogin(email, password)
@@ -21,7 +24,9 @@ const Login = () => {
         navigate(location.state || "/");
       })
       .catch((error) => {
-        console.log(error);
+        const errormessage = error.message.split("Firebase: ")[1];
+        setError(errormessage);
+        // alert(error);
       });
   };
 
@@ -30,14 +35,16 @@ const Login = () => {
       <h1 className="text-3xl font-bold text-center">Login now!</h1>
       <form onSubmit={handleLogin} className="card-body">
         <fieldset className="fieldset">
-          {/* email */}
+          {/* email input */}
           <label className="label">Email</label>
           <input
             type="email"
             name="email"
             className="input"
-            placeholder="Email"
+            placeholder="Enter your email"
+            required
           />
+
           {/* password */}
           <label className="label">Password</label>
           <input
@@ -45,7 +52,10 @@ const Login = () => {
             name="password"
             className="input"
             placeholder="Password"
+            required
           />
+          {error && <p className="text-red-600">{error}</p>}
+
           <button type="submit" className="btn btn-neutral mt-4">
             Login
           </button>
