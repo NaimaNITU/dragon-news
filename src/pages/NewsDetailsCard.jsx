@@ -7,6 +7,12 @@ const NewsDetailsCard = ({ newsDetails }) => {
 
   return (
     <div className="card bg-base-100 shadow-xl p-4">
+      <div className=" justify-start my-6">
+        <Link to="/" className="btn bg-gray-300 text-white hover:bg-red-700">
+          <FaArrowLeft className="mr-2" />
+          Return to Home
+        </Link>
+      </div>
       <figure>
         <img
           src={image_url}

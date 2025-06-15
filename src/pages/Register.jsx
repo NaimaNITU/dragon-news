@@ -1,9 +1,11 @@
 import React, { use } from "react";
-import { NavLink } from "react-router";
+import { NavLink, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../provider/AuthProvider";
 
 const Register = () => {
   const { userRegistration, setUser } = use(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleRegister = (event) => {
     event.preventDefault();
@@ -16,6 +18,9 @@ const Register = () => {
       .then((result) => {
         const user = result.user;
         setUser(user);
+
+        alert("Registration Successfully");
+        navigate(location.state || "/");
       })
       .catch((error) => {
         console.log(error);
